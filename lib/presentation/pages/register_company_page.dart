@@ -14,9 +14,7 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
   int _currentIndex = 1;
 
   void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    setState(() => _currentIndex = index);
   }
 
   @override
@@ -28,7 +26,7 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor:Color(0xFF66BB6A),
+        selectedItemColor: const Color(0xFF2ECC71),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
@@ -43,16 +41,14 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
         child: Column(
           children: [
 
-            // HEADER
+            // APP BAR
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              color: const Color(0xFFA9D9C8),
-
+              color: const Color(0xFFD5EDE3),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
 
-                  // TITLE (same style as dashboard)
                   const Center(
                     child: Text(
                       "Register Company",
@@ -64,15 +60,11 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                     ),
                   ),
 
-                  // BACK ARROW
                   Align(
                     alignment: Alignment.centerLeft,
                     child: GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
+                      child: const Icon(Icons.arrow_back, color: Colors.black),
                     ),
                   ),
                 ],
@@ -86,18 +78,24 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    // ✅ FIXED RED STAR TEXT
-                    const SizedBox(height: 5),
+                    // ✅ FIXED: ONLY * RED
                     RichText(
                       text: const TextSpan(
-                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                         children: [
                           TextSpan(text: "Fields marked "),
                           TextSpan(
                             text: "*",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          TextSpan(text: " are required"),
+                          TextSpan(text: "  are required"),
                         ],
                       ),
                     ),
@@ -140,7 +138,7 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                       value: "pune.hr@nexoratech.com",
                     ),
 
-                    const SizedBox(height: 20 ),
+                    const SizedBox(height: 20),
 
                     const PrimaryButton(text: "Register Company"),
                   ],

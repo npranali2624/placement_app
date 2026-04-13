@@ -15,8 +15,6 @@ class CompanyField extends StatefulWidget {
 }
 
 class _CompanyFieldState extends State<CompanyField> {
-  bool focused = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,36 +45,27 @@ class _CompanyFieldState extends State<CompanyField> {
 
           const SizedBox(height: 4),
 
-          Focus(
-            onFocusChange: (v) {
-              setState(() => focused = v);
-            },
-            child: TextFormField(
-              initialValue: widget.value,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+          TextFormField(
+            initialValue: widget.value,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: const Color(0xFFF5F7F6), // SAME AS LOGIN
+
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide.none,
               ),
 
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color(0xFFF0F0F0),
-
-                // ✅ LIGHT GREEN BORDER (DEFAULT)
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Color(0xFFAED3C6), // light green
-                  ),
-                ),
-
-                // ✅ DARK GREEN ON FOCUS
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Color(0xFFAED3C6),
-                    width: 2,
-                  ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(
+                  color: Color(0xFF2ECC71),
+                  width: 1,
                 ),
               ),
             ),
