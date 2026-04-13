@@ -7,7 +7,6 @@ class JobCard extends StatelessWidget {
   final String location;
   final String time;
   final String salary;
-  final Color bgColor;
   final Color iconColor;
   final String logoLetter;
 
@@ -19,7 +18,6 @@ class JobCard extends StatelessWidget {
     required this.location,
     required this.time,
     required this.salary,
-    required this.bgColor,
     required this.iconColor,
     required this.logoLetter,
   });
@@ -27,45 +25,35 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(14),
+
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5F6E6B).withOpacity(0.07),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 6,
           ),
         ],
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          // 🔹 TOP ROW
           Row(
             children: [
-              // 🔹 Company Logo
-              Container(
-                height: 42,
-                width: 42,
-                decoration: BoxDecoration(
-                  color: bgColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Text(
-                    logoLetter,
-                    style: TextStyle(
-                      color: iconColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+              CircleAvatar(
+                backgroundColor: iconColor.withOpacity(0.2),
+                child: Text(
+                  logoLetter,
+                  style: TextStyle(color: iconColor),
                 ),
               ),
-
-              const SizedBox(width: 14),
+              const SizedBox(width: 10),
 
               Expanded(
                 child: Column(
@@ -74,87 +62,55 @@ class JobCard extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: Color(0xFF5F6E6B),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 3),
                     Text(
                       company,
-                      style: const TextStyle(
-                        color: Color(0xFFB8CCCA),
-                        fontSize: 12,
-                      ),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ],
                 ),
               ),
-
-              const Icon(Icons.chevron_right, size: 20, color: Color(0xFFB8CCCA)),
             ],
           ),
 
           const SizedBox(height: 10),
 
-          Divider(height: 1, color: const Color(0xFFEAEFE9)),
-
-          const SizedBox(height: 10),
-
-          // 🔹 Meta Details
+          // 🔹 DETAILS ROW (FIXED OVERFLOW)
           Row(
             children: [
-              _MetaChip(icon: Icons.work_outline, label: type),
-              const SizedBox(width: 14),
-              _MetaChip(icon: Icons.location_on_outlined, label: location),
-            ],
-          ),
-
-          const SizedBox(height: 8),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                salary,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF55A3A7),
+              Expanded(
+                child: Text(
+                  location,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 12),
                 ),
               ),
               Text(
-                "Posted $time",
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: Color(0xFFB8CCCA),
-                ),
+                salary,
+                style: const TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 6),
+
+          Row(
+            children: [
+              Text(
+                type,
+                style: const TextStyle(fontSize: 12),
+              ),
+              const Spacer(),
+              Text(
+                time,
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _MetaChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _MetaChip({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 13, color: const Color(0xFFB8CCCA)),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, color: Color(0xFF5F6E6B)),
-        ),
-      ],
     );
   }
 }
