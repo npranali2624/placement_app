@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/info_tile.dart';
 import 'login_page.dart';
+import 'register_company_page.dart'; // ✅ ADDED
 
 class CoordinatorDashboardPage extends StatefulWidget {
   const CoordinatorDashboardPage({super.key});
@@ -12,7 +13,6 @@ class CoordinatorDashboardPage extends StatefulWidget {
 
 class _CoordinatorDashboardPageState
     extends State<CoordinatorDashboardPage> {
-
   int _currentIndex = 0;
 
   void _logout() {
@@ -31,15 +31,14 @@ class _CoordinatorDashboardPageState
       drawer: Drawer(
         child: Column(
           children: [
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               decoration: const BoxDecoration(
                 color: Color(0xFFAED3C6),
               ),
-              child: Row(
-                children: const [
+              child: const Row(
+                children: [
                   CircleAvatar(
                     radius: 24,
                     backgroundColor: Colors.white,
@@ -75,6 +74,7 @@ class _CoordinatorDashboardPageState
             ),
 
             const Spacer(),
+
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
@@ -104,14 +104,12 @@ class _CoordinatorDashboardPageState
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
-
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu, color: Colors.black),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
-
         title: const Text(
           "Placement App",
           style: TextStyle(color: Colors.black),
@@ -131,7 +129,6 @@ class _CoordinatorDashboardPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const Text(
                 "Welcome, Coordinator!",
                 style: TextStyle(
@@ -167,11 +164,22 @@ class _CoordinatorDashboardPageState
 
               const SizedBox(height: 10),
 
-              const InfoTile(
-                icon: Icons.business,
-                title: "Register Company",
-                subtitle: "Add new company details",
-                color: Color(0xFFFFC107),
+              // 🔥 CLICKABLE REGISTER COMPANY CARD
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterCompanyPage(),
+                    ),
+                  );
+                },
+                child: const InfoTile(
+                  icon: Icons.business,
+                  title: "Register Company",
+                  subtitle: "Add new company details",
+                  color: Color(0xFFFFC107),
+                ),
               ),
 
               const InfoTile(
@@ -222,7 +230,6 @@ class _CoordinatorDashboardPageState
         ),
       ),
 
-      /// 🔹 BOTTOM NAV
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -245,6 +252,7 @@ class _CoordinatorDashboardPageState
   }
 }
 
+/* ================= STAT ITEM ================= */
 class StatItem extends StatelessWidget {
   final String number;
   final String label;

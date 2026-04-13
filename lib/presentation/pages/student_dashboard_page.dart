@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/job_card.dart';
 import 'login_page.dart';
+import 'student_profile_page.dart';
 
 class AppColors {
   static const Color primary    = Color(0xFF55A3A7);
@@ -125,7 +126,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
           ),
         ),
 
-
         title: Container(
           height: 40,
           decoration: BoxDecoration(
@@ -231,7 +231,18 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
+        onTap: (index) {
+          if (index == 4) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const StudentProfilePage(),
+              ),
+            );
+          } else {
+            setState(() => _currentIndex = index);
+          }
+        },
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
