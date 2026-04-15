@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../widgets/company_field.dart';
+import '../widgets/section_title.dart';
+import '../widgets/primary_button.dart';
 
 class EditStudentProfilePage extends StatefulWidget {
   const EditStudentProfilePage({super.key});
@@ -8,201 +11,184 @@ class EditStudentProfilePage extends StatefulWidget {
       _EditStudentProfilePageState();
 }
 
-class _EditStudentProfilePageState extends State<EditStudentProfilePage> {
-
-
-  final Color primaryColor = const Color(0xFF3A8A80);
-  final Color lightGreen = const Color(0xFFAED3C6);
-
-
-  final skillsController =
-  TextEditingController(text: "Flutter, Dart, Python, Firebase");
-
-  final collegeController =
-  TextEditingController(text: "MIT College of Engineering, Pune");
-
-  final courseController =
-  TextEditingController(text: "B.E.");
-
-  final branchController =
-  TextEditingController(text: "Computer Engineering");
-
-  final yearController =
-  TextEditingController(text: "3rd Year");
-
-  final cgpaController =
-  TextEditingController(text: "8.5 / 10");
-
-  final diplomaController =
-  TextEditingController(text: "85%");
-
-  final passingYearController =
-  TextEditingController(text: "2025");
-
-
-  Widget formCard(List<Widget> children) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.black.withOpacity(0.08)),
-      ),
-      child: Column(children: children),
-    );
-  }
-
-
-  Widget textField(String label, TextEditingController controller,
-      {bool enabled = true}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: TextField(
-        controller: controller,
-        enabled: enabled,
-        decoration: InputDecoration(
-          labelText: label,
-          filled: true,
-          fillColor: enabled ? Colors.white : Colors.grey.shade100,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
-    );
-  }
-
-
-  Widget uploadButton(String title, IconData icon) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      decoration: BoxDecoration(
-        color: lightGreen.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: primaryColor.withOpacity(0.3)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: primaryColor),
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-
-  Widget gradientButton() {
-    return GestureDetector(
-      onTap: () {
-
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Changes saved successfully"),
-            backgroundColor: primaryColor,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-
-
-        Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pop(context);
-        });
-      },
-      child: Container(
-        width: double.infinity,
-        height: 50,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFF1ABC9C),
-              Color(0xFF2ECC71),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: const Center(
-          child: Text(
-            "Save Changes",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+class _EditStudentProfilePageState
+    extends State<EditStudentProfilePage> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFD5EDE3),
 
-
-      backgroundColor: lightGreen.withOpacity(0.25),
-
-      appBar: AppBar(
-        title: const Text("Edit Profile"),
-        backgroundColor: lightGreen,
-        elevation: 0,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
         child: Column(
           children: [
 
+            // 🔹 APP BAR
+            Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16, vertical: 14),
+              color: const Color(0xFFD5EDE3),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
 
-            formCard([
-              textField("Full Name",
-                  TextEditingController(text: "Rahul Sharma"),
-                  enabled: false),
-              textField("Email",
-                  TextEditingController(
-                      text: "rahul.sharma@email.com"),
-                  enabled: false),
-              textField("Phone",
-                  TextEditingController(text: "+91 98765 43210"),
-                  enabled: false),
-              textField("Technical Skills", skillsController),
-              textField("College Name", collegeController),
-              textField("Course", courseController),
-              textField("Branch", branchController),
-              textField("Year", yearController),
-              textField("CGPA", cgpaController),
-              textField("12th / Diploma %", diplomaController),
-              textField("Passing Year", passingYearController),
-            ]),
+                  const Center(
+                    child: Text(
+                      "Edit Profile",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
 
-            const SizedBox(height: 16),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(Icons.arrow_back,
+                          color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
+                  children: [
 
-            formCard([
-              uploadButton("Upload Updated Resume", Icons.upload_file),
-              uploadButton("Upload Documents", Icons.attach_file),
-            ]),
+                    // 🔹 PERSONAL INFO (NON-EDITABLE)
+                    const SectionTitle(
+                        title: "Personal Information"),
 
-            const SizedBox(height: 20),
+                    Opacity(
+                      opacity: 0.7,
+                      child: AbsorbPointer(
+                        child: CompanyField(
+                          label: "Full Name",
+                          value: "Rahul Sharma",
+                        ),
+                      ),
+                    ),
 
+                    Opacity(
+                      opacity: 0.7,
+                      child: AbsorbPointer(
+                        child: CompanyField(
+                          label: "Email",
+                          value: "rahul.sharma@email.com",
+                        ),
+                      ),
+                    ),
 
-            gradientButton(),
+                    Opacity(
+                      opacity: 0.7,
+                      child: AbsorbPointer(
+                        child: CompanyField(
+                          label: "Phone",
+                          value: "+91 98765 43210",
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // 🔹 SKILLS
+                    const SectionTitle(
+                        title: "Technical Skills"),
+
+                    const CompanyField(
+                      label: "Skills",
+                      value:
+                      "Flutter, Dart, Python, Firebase",
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // 🔹 QUALIFICATION
+                    const SectionTitle(
+                        title: "Qualification"),
+
+                    const CompanyField(
+                      label: "College Name",
+                      value:
+                      "MIT College of Engineering, Pune",
+                    ),
+                    const CompanyField(
+                      label: "Course",
+                      value: "B.E.",
+                    ),
+                    const CompanyField(
+                      label: "Branch",
+                      value: "Computer Engineering",
+                    ),
+                    const CompanyField(
+                      label: "Year",
+                      value: "3rd Year",
+                    ),
+                    const CompanyField(
+                      label: "CGPA",
+                      value: "8.5 / 10",
+                    ),
+                    const CompanyField(
+                      label: "12th / Diploma %",
+                      value: "85%",
+                    ),
+                    const CompanyField(
+                      label: "Year of Passing",
+                      value: "2025",
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // 🔹 DOCUMENTS
+                    const SectionTitle(title: "Documents"),
+
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: OutlinedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.upload_file),
+                        label:
+                        const Text("Upload Resume"),
+                        style: OutlinedButton.styleFrom(
+                          minimumSize:
+                          const Size(double.infinity, 48),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: OutlinedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.attach_file),
+                        label:
+                        const Text("Upload Documents"),
+                        style: OutlinedButton.styleFrom(
+                          minimumSize:
+                          const Size(double.infinity, 48),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // 🔹 SAVE BUTTON
+                    const PrimaryButton(
+                        text: "Save Changes"),
+
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

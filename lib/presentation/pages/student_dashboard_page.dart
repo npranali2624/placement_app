@@ -3,15 +3,6 @@ import '../widgets/job_card.dart';
 import 'login_page.dart';
 import 'student_profile_page.dart';
 
-class AppColors {
-  static const Color primary    = Color(0xFF55A3A7);
-  static const Color secondary  = Color(0xFF4A83B0);
-  static const Color accent     = Color(0xFFE9C966);
-  static const Color amber      = Color(0xFFECB93C);
-  static const Color sage       = Color(0xFF91BA90);
-  static const Color background = Color(0xFFD5EDE3);
-}
-
 class StudentDashboardPage extends StatefulWidget {
   const StudentDashboardPage({super.key});
 
@@ -33,27 +24,25 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ✅ UNIFIED: AppColors.background
       backgroundColor: AppColors.background,
 
       drawer: Drawer(
         child: Column(
           children: [
-
+            // ✅ UNIFIED: AppColors.sageHeader
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 20,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               decoration: const BoxDecoration(
-                color: Color(0xFFAED3C6),
+                color: AppColors.sageHeader,
               ),
-              child: Row(
-                children: const [
+              child: const Row(
+                children: [
                   CircleAvatar(
                     radius: 24,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 26),
+                    child: Icon(Icons.person, size: 26, color: AppColors.primary),
                   ),
                   SizedBox(width: 12),
                   Column(
@@ -64,9 +53,16 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          color: AppColors.textDark,
                         ),
                       ),
-                      Text("student@email.com"),
+                      Text(
+                        "student@email.com",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textMuted,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -74,8 +70,9 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
             ),
 
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text("Settings"),
+              leading: const Icon(Icons.settings, color: AppColors.textDark),
+              title: const Text("Settings",
+                  style: TextStyle(color: AppColors.textDark)),
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -86,14 +83,12 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
 
             const Spacer(),
 
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                vertical: 14,
-                horizontal: 16,
-              ),
-              child: GestureDetector(
-                onTap: _logout,
+            // ✅ UNIFIED: InkWell for logout
+            InkWell(
+              onTap: _logout,
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                 child: const Row(
                   children: [
                     Icon(Icons.logout, color: Colors.red),
@@ -118,19 +113,17 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
-
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black),
+            icon: const Icon(Icons.menu, color: AppColors.textDark),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
-
         title: Container(
           height: 40,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(AppRadius.card),
           ),
           child: TextField(
             decoration: InputDecoration(
@@ -142,13 +135,11 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
             ),
           ),
         ),
-
         centerTitle: true,
-
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications_none, color: Colors.black),
+            child: Icon(Icons.notifications_none, color: AppColors.textDark),
           ),
         ],
       ),
@@ -159,26 +150,24 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
+              // ✅ UNIFIED: AppColors.textDark for titles
               const Text(
                 "Welcome, Student!",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: AppColors.textDark,
                 ),
               ),
-
               const SizedBox(height: 6),
-
+              // ✅ UNIFIED: AppColors.textMuted for subtitles
               const Text(
                 "Exploring suitable job openings",
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: AppColors.textMuted,
                   fontSize: 13,
                 ),
               ),
-
               const SizedBox(height: 20),
 
               JobCard(
@@ -191,7 +180,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                 iconColor: AppColors.primary,
                 logoLetter: "T",
               ),
-
               JobCard(
                 title: "UI/UX Designer",
                 company: "XYZ Solutions",
@@ -202,7 +190,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                 iconColor: AppColors.amber,
                 logoLetter: "X",
               ),
-
               JobCard(
                 title: "Flutter Developer",
                 company: "DEE Technologies",
@@ -213,7 +200,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                 iconColor: AppColors.sage,
                 logoLetter: "D",
               ),
-
               JobCard(
                 title: "Data Analyst",
                 company: "Analytics Hub",
@@ -229,6 +215,7 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
         ),
       ),
 
+      // ✅ UNIFIED: AppColors.primary for selectedItemColor
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -244,7 +231,7 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
           }
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.green,
+        selectedItemColor: AppColors.primary,
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),

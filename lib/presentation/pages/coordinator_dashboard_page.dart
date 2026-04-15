@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/info_tile.dart';
 import 'login_page.dart';
-import 'register_company_page.dart'; // ✅ ADDED
+import 'register_company_page.dart';
 
 class CoordinatorDashboardPage extends StatefulWidget {
   const CoordinatorDashboardPage({super.key});
@@ -26,23 +26,25 @@ class _CoordinatorDashboardPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD5EDE3),
+      // ✅ UNIFIED: uses AppColors.background
+      backgroundColor: AppColors.background,
 
       drawer: Drawer(
         child: Column(
           children: [
+            // ✅ UNIFIED: uses AppColors.sageHeader
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               decoration: const BoxDecoration(
-                color: Color(0xFFAED3C6),
+                color: AppColors.sageHeader,
               ),
               child: const Row(
                 children: [
                   CircleAvatar(
                     radius: 24,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 26),
+                    child: Icon(Icons.person, size: 26, color: AppColors.primary),
                   ),
                   SizedBox(width: 12),
                   Column(
@@ -53,9 +55,16 @@ class _CoordinatorDashboardPageState
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
+                          color: AppColors.textDark,
                         ),
                       ),
-                      Text("coordinator@email.com"),
+                      Text(
+                        "coordinator@email.com",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textMuted,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -63,8 +72,9 @@ class _CoordinatorDashboardPageState
             ),
 
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text("Settings"),
+              leading: const Icon(Icons.settings, color: AppColors.textDark),
+              title: const Text("Settings",
+                  style: TextStyle(color: AppColors.textDark)),
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -75,11 +85,12 @@ class _CoordinatorDashboardPageState
 
             const Spacer(),
 
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-              child: GestureDetector(
-                onTap: _logout,
+            // ✅ UNIFIED: uses InkWell instead of GestureDetector
+            InkWell(
+              onTap: _logout,
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                 child: const Row(
                   children: [
                     Icon(Icons.logout, color: Colors.red),
@@ -100,25 +111,25 @@ class _CoordinatorDashboardPageState
       ),
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFD5EDE3),
+        backgroundColor: AppColors.background,
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black),
+            icon: const Icon(Icons.menu, color: AppColors.textDark),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
         title: const Text(
           "Placement App",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: AppColors.textDark),
         ),
         centerTitle: true,
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications_none, color: Colors.black),
+            child: Icon(Icons.notifications_none, color: AppColors.textDark),
           )
         ],
       ),
@@ -129,21 +140,25 @@ class _CoordinatorDashboardPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // ✅ UNIFIED: uses AppColors.textDark
               const Text(
                 "Welcome, Coordinator!",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
+                  color: AppColors.textDark,
                 ),
               ),
 
               const SizedBox(height: 16),
 
+              // ✅ UNIFIED: uses AppRadius.card
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  border: Border.all(color: AppColors.cardBorder, width: 1.2),
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -157,14 +172,18 @@ class _CoordinatorDashboardPageState
 
               const SizedBox(height: 20),
 
+              // ✅ UNIFIED: section header style
               const Text(
                 "Company Operations:",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textDark,
+                ),
               ),
 
               const SizedBox(height: 10),
 
-              // 🔥 CLICKABLE REGISTER COMPANY CARD
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -174,6 +193,7 @@ class _CoordinatorDashboardPageState
                     ),
                   );
                 },
+                borderRadius: BorderRadius.circular(AppRadius.card),
                 child: const InfoTile(
                   icon: Icons.business,
                   title: "Register Company",
@@ -182,54 +202,80 @@ class _CoordinatorDashboardPageState
                 ),
               ),
 
-              const InfoTile(
-                icon: Icons.location_on,
-                title: "Add Work Location",
-                subtitle: "Add work company locations",
-                color: Color(0xFF26A69A),
+              // ✅ UNIFIED: all tiles wrapped in InkWell for tap feedback
+              InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                child: const InfoTile(
+                  icon: Icons.location_on,
+                  title: "Add Work Location",
+                  subtitle: "Add work company locations",
+                  color: Color(0xFF26A69A),
+                ),
               ),
 
-              const InfoTile(
-                icon: Icons.edit,
-                title: "Edit Company Details",
-                subtitle: "Edit company information",
-                color: Color(0xFF66BB6A),
+              InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                child: const InfoTile(
+                  icon: Icons.edit,
+                  title: "Edit Company Details",
+                  subtitle: "Edit company information",
+                  color: Color(0xFF66BB6A),
+                ),
               ),
 
               const SizedBox(height: 20),
 
               const Text(
                 "Opening Operations:",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textDark,
+                ),
               ),
 
               const SizedBox(height: 10),
 
-              const InfoTile(
-                icon: Icons.work,
-                title: "Create Opening",
-                subtitle: "Post new job openings",
-                color: Color(0xFF42A5F5),
+              InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                child: const InfoTile(
+                  icon: Icons.work,
+                  title: "Create Opening",
+                  subtitle: "Post new job openings",
+                  color: Color(0xFF42A5F5),
+                ),
               ),
 
-              const InfoTile(
-                icon: Icons.visibility,
-                title: "Read Opening",
-                subtitle: "View all job openings",
-                color: Color(0xFF8E44AD),
+              InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                child: const InfoTile(
+                  icon: Icons.visibility,
+                  title: "Read Opening",
+                  subtitle: "View all job openings",
+                  color: Color(0xFF8E44AD),
+                ),
               ),
 
-              const InfoTile(
-                icon: Icons.update,
-                title: "Update Opening",
-                subtitle: "Edit existing openings",
-                color: Color(0xFFE67E22),
+              InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                child: const InfoTile(
+                  icon: Icons.update,
+                  title: "Update Opening",
+                  subtitle: "Edit existing openings",
+                  color: Color(0xFFE67E22),
+                ),
               ),
             ],
           ),
         ),
       ),
 
+      // ✅ UNIFIED: selectedItemColor uses AppColors.primary
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -238,7 +284,7 @@ class _CoordinatorDashboardPageState
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.green,
+        selectedItemColor: AppColors.primary,
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
@@ -252,7 +298,6 @@ class _CoordinatorDashboardPageState
   }
 }
 
-/* ================= STAT ITEM ================= */
 class StatItem extends StatelessWidget {
   final String number;
   final String label;
@@ -273,7 +318,7 @@ class StatItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(label),
+        Text(label, style: const TextStyle(color: AppColors.textMuted)),
       ],
     );
   }

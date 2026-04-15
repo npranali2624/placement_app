@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'student_dashboard_page.dart';
 import 'edit_student_profile_page.dart';
-import '../widgets/custom_button.dart';
+import 'login_page.dart';
 
 class StudentProfilePage extends StatelessWidget {
   const StudentProfilePage({super.key});
@@ -30,22 +30,19 @@ class StudentProfilePage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.teal.withOpacity(0.2)),
+        // ✅ UNIFIED: AppRadius.card
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: AppColors.cardBorder),
       ),
       clipBehavior: Clip.hardEdge,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          // 🔹 Gradient Header
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: gradientColors,
-              ),
+              gradient: LinearGradient(colors: gradientColors),
             ),
             child: Text(
               title,
@@ -57,43 +54,42 @@ class StudentProfilePage extends StatelessWidget {
               ),
             ),
           ),
-
-          // 🔹 Rows
           ...rows.asMap().entries.map((entry) {
             final isLast = entry.key == rows.length - 1;
             final row = entry.value;
-
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 11),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
                   child: Row(
                     children: [
                       Text(
                         row['label']!,
+                        // ✅ UNIFIED: AppColors.textMuted
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF6B8F85),
+                          color: AppColors.textMuted,
                         ),
                       ),
                       const Spacer(),
                       Text(
                         row['value']!,
+                        // ✅ UNIFIED: AppColors.textDark
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF1A3C34),
+                          color: AppColors.textDark,
                         ),
                       ),
                     ],
                   ),
                 ),
                 if (!isLast)
-                  Divider(
+                // ✅ UNIFIED: AppColors.divider
+                  const Divider(
                     height: 1,
                     thickness: 0.5,
-                    color: Colors.teal.withOpacity(0.12),
+                    color: AppColors.divider,
                   ),
               ],
             );
@@ -106,21 +102,22 @@ class StudentProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F9F8), // light background
+      // ✅ UNIFIED: uses AppColors.background directly
+      backgroundColor: AppColors.background,
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F9F8),
-        elevation: 0,
         title: const Text(
           "Student Profile",
           style: TextStyle(
-            color: Color(0xFF1A3C34),
+            color: AppColors.textDark,
             fontWeight: FontWeight.w600,
-            fontSize: 17,
           ),
         ),
+        // ✅ UNIFIED: AppColors.sageHeader
+        backgroundColor: AppColors.sageHeader,
+        elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Color(0xFF1A3C34)),
+        iconTheme: const IconThemeData(color: AppColors.textDark),
       ),
 
       body: SafeArea(
@@ -128,31 +125,29 @@ class StudentProfilePage extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           child: Column(
             children: [
-
-              // 🔹 Profile Card
+              // ✅ UNIFIED: card border and radius
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 28),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.teal.withOpacity(0.2),
-                  ),
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  border: Border.all(color: AppColors.cardBorder),
                 ),
                 child: Column(
                   children: [
+                    // ✅ UNIFIED: avatar radius matches AppRadius.card
                     Container(
                       width: 96,
                       height: 96,
                       decoration: BoxDecoration(
-                        color: Colors.teal.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(14),
+                        color: AppColors.primary.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(AppRadius.card),
                       ),
                       child: const Icon(
                         Icons.person,
                         size: 52,
-                        color: Colors.teal,
+                        color: AppColors.primary,
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -161,7 +156,7 @@ class StudentProfilePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF1A3C34),
+                        color: AppColors.textDark,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -169,7 +164,7 @@ class StudentProfilePage extends StatelessWidget {
                       _email,
                       style: TextStyle(
                         fontSize: 13,
-                        color: Colors.teal,
+                        color: AppColors.primary,
                       ),
                     ),
                   ],
@@ -178,12 +173,11 @@ class StudentProfilePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // 🔹 Personal Details
               _sectionCard(
                 title: "PERSONAL DETAILS",
                 gradientColors: const [
-                  Color(0xFF55A3A7),
-                  Color(0xFF91BA90),
+                  AppColors.primary,
+                  AppColors.sage,
                 ],
                 rows: const [
                   {'label': 'Gender', 'value': _gender},
@@ -196,12 +190,11 @@ class StudentProfilePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // 🔹 Qualification
               _sectionCard(
                 title: "QUALIFICATION",
                 gradientColors: const [
-                  Color(0xFF4A83B0),
-                  Color(0xFF55A3A7),
+                  AppColors.secondary,
+                  AppColors.primary,
                 ],
                 rows: const [
                   {'label': 'College Name', 'value': _college},
@@ -216,18 +209,35 @@ class StudentProfilePage extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-
-              CustomButton(
-                label: "Update Profile",
-                onPressed: () {
+              // ✅ UNIFIED: same button style as login page
+              InkWell(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                      const EditStudentProfilePage(),
+                      builder: (context) => const EditStudentProfilePage(),
                     ),
                   );
                 },
+                borderRadius: BorderRadius.circular(AppRadius.button),
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(AppRadius.button),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Update Profile",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
