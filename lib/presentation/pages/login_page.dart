@@ -12,15 +12,20 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _loginController    = TextEditingController();
+  final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
   String? _validateLogin(String? value) {
-    if (value == null || value.trim().isEmpty) return "Enter Email or Mobile Number";
-    final emailRegex  = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    if (value == null || value.trim().isEmpty) {
+      return "Enter Email or Mobile Number";
+    }
+    final emailRegex =
+    RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     final mobileRegex = RegExp(r'^[0-9]{10}$');
-    if (!emailRegex.hasMatch(value.trim()) && !mobileRegex.hasMatch(value.trim())) {
+
+    if (!emailRegex.hasMatch(value.trim()) &&
+        !mobileRegex.hasMatch(value.trim())) {
       return "Enter valid Email or 10-digit Mobile Number";
     }
     return null;
@@ -72,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
+              color: Colors.black87,
             ),
             decoration: InputDecoration(
               hintText: hint,
@@ -90,17 +96,9 @@ class _LoginPageState extends State<LoginPage> {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
                 borderSide: const BorderSide(
-                  color: Color(0xFF2ECC71),
+                  color: Color(0xFF1E88E5),
                   width: 1,
                 ),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: Colors.redAccent, width: 1),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
               ),
             ),
           ),
@@ -118,11 +116,14 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
         width: double.infinity,
         height: 55,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF1ABC9C), Color(0xFF2ECC71)],
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF42A5F5),
+              Color(0xFF1E88E5),
+            ],
           ),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.all(Radius.circular(14)),
         ),
         child: Center(
           child: Text(
@@ -150,13 +151,13 @@ class _LoginPageState extends State<LoginPage> {
         decoration: BoxDecoration(
           color: const Color(0xFFF5F7F6),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFF3dba8c), width: 1),
+          border: Border.all(color: const Color(0xFF1E88E5), width: 1),
         ),
         child: Center(
           child: Text(
             label,
             style: const TextStyle(
-              color: Color(0xFF2a9d72),
+              color: Color(0xFF1E88E5),
               fontWeight: FontWeight.w600,
               fontSize: 17,
             ),
@@ -166,21 +167,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _roleBadge(String label) {
+  Widget _bar(double height, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      width: 5,
+      height: height,
       decoration: BoxDecoration(
-        color: const Color(0xFF3dba8c).withOpacity(0.12),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFF3dba8c).withOpacity(0.4)),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: Color(0xFF3dba8c),
-        ),
+        color: color,
+        borderRadius: BorderRadius.circular(10),
       ),
     );
   }
@@ -189,67 +182,114 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFD5EDE3),
+
       body: SafeArea(
         child: Column(
           children: [
-
-
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 25, 20, 10),
+              padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
               child: Column(
                 children: [
+                  // 🔥 LOGO (UNCHANGED)
                   Container(
-                    width: 70,
-                    height: 70,
+                    width: 110,
+                    height: 110,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.55),
-                      borderRadius: BorderRadius.circular(22),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.7),
-                        width: 1.5,
-                      ),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFFE67E22).withOpacity(0.18),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
                     ),
-                    child: const Icon(
-                      Icons.work_outline_rounded,
-                      color: Color(0xFF3dba8c),
-                      size: 36,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: RadialGradient(
+                              colors: [
+                                const Color(0xFF9B59B6).withOpacity(0.20),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Positioned(
+                          bottom: 20,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              _bar(10, const Color(0xFFE67E22)),
+                              const SizedBox(width: 4),
+                              _bar(16, const Color(0xFF9B59B6)),
+                              const SizedBox(width: 4),
+                              _bar(22, const Color(0xFFE67E22)),
+                              const SizedBox(width: 4),
+                              _bar(30, const Color(0xFF9B59B6)),
+                            ],
+                          ),
+                        ),
+
+                        const Positioned(
+                          bottom: 40,
+                          child: Icon(
+                            Icons.trending_up_rounded,
+                            color: Color(0xFF9B59B6),
+                            size: 34,
+                          ),
+                        ),
+
+                        const Positioned(
+                          top: 18,
+                          child: Icon(
+                            Icons.directions_walk_rounded,
+                            color: Color(0xFFE67E22),
+                            size: 26,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+
+                  const SizedBox(height: 16),
+
                   const Text(
                     "Placement App",
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF2a9d72),
+                      color: Color(0xFF1E88E5),
                     ),
                   ),
-                  const SizedBox(height: 5),
+
+                  const SizedBox(height: 6),
+
+                  // 🔥 ONLY CHANGE: DARKER TEXT BELOW LOGO
                   const Text(
                     "Your career journey starts here",
-                    style: TextStyle(fontSize: 13, color: Colors.grey),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _roleBadge("Coordinator"),
-                      const SizedBox(width: 10),
-                      _roleBadge("Student"),
-                    ],
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black, // 👈 DARKENED
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),
             ),
 
-            // EXTRA LARGE CARD
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 600,
-                    ),
+                    constraints: const BoxConstraints(maxWidth: 600),
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Card(
@@ -264,7 +304,6 @@ class _LoginPageState extends State<LoginPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 const SectionTitle(title: "Login Details"),
 
                                 _loginField(
@@ -286,12 +325,11 @@ class _LoginPageState extends State<LoginPage> {
                                       _obscurePassword
                                           ? Icons.visibility_off_outlined
                                           : Icons.visibility_outlined,
-                                      color: const Color(0xFF3dba8c),
-                                      size: 20,
+                                      color: const Color(0xFF1E88E5),
                                     ),
-                                    onPressed: () => setState(
-                                          () => _obscurePassword = !_obscurePassword,
-                                    ),
+                                    onPressed: () => setState(() {
+                                      _obscurePassword = !_obscurePassword;
+                                    }),
                                   ),
                                 ),
 
@@ -302,8 +340,7 @@ class _LoginPageState extends State<LoginPage> {
                                     child: const Text(
                                       "Forgot Password?",
                                       style: TextStyle(
-                                        color: Color(0xFF2a9d72),
-                                        fontSize: 13,
+                                        color: Color(0xFF1E88E5),
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -312,20 +349,22 @@ class _LoginPageState extends State<LoginPage> {
 
                                 const SizedBox(height: 10),
                                 const SectionTitle(title: "Login As"),
+
                                 const SizedBox(height: 6),
 
                                 _gradientButton(
                                   label: "Login as Coordinator",
-                                  onTap: () => _navigateTo(const CoordinatorDashboardPage()),
+                                  onTap: () => _navigateTo(
+                                      const CoordinatorDashboardPage()),
                                 ),
 
                                 const SizedBox(height: 12),
 
                                 _outlinedButton(
                                   label: "Login as Student",
-                                  onTap: () => _navigateTo(const StudentDashboardPage()),
+                                  onTap: () =>
+                                      _navigateTo(const StudentDashboardPage()),
                                 ),
-
                               ],
                             ),
                           ),

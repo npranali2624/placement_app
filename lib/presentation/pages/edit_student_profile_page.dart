@@ -13,20 +13,24 @@ class EditStudentProfilePage extends StatefulWidget {
 class _EditStudentProfilePageState
     extends State<EditStudentProfilePage> {
 
+  // ✅ SAME COLORS (from AddWorkLocationPage)
+  static const Color bgPage = Color(0xFFD5EDE3);
+  static const Color cardBg = Colors.white;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD5EDE3),
+      backgroundColor: bgPage,
 
       body: SafeArea(
         child: Column(
           children: [
 
-            // 🔹 APP BAR
+            // 🔹 APP BAR (UNCHANGED)
             Container(
               padding: const EdgeInsets.symmetric(
                   horizontal: 16, vertical: 14),
-              color: const Color(0xFFD5EDE3),
+              color: bgPage,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -58,97 +62,128 @@ class _EditStudentProfilePageState
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
-                  crossAxisAlignment:
-                  CrossAxisAlignment.start,
                   children: [
 
-                    const SectionTitle(title: "Personal Information"),
+                    // 🔹 PERSONAL INFO CARD
+                    _card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SectionTitle(title: "Personal Information"),
 
-                    Opacity(
-                      opacity: 0.7,
-                      child: AbsorbPointer(
-                        child: CompanyField(
-                          label: "Full Name",
-                          value: "Rahul Sharma",
-                        ),
+                          Opacity(
+                            opacity: 0.7,
+                            child: AbsorbPointer(
+                              child: CompanyField(
+                                label: "Full Name",
+                                value: "Rahul Sharma",
+                              ),
+                            ),
+                          ),
+
+                          Opacity(
+                            opacity: 0.7,
+                            child: AbsorbPointer(
+                              child: CompanyField(
+                                label: "Email",
+                                value: "rahul.sharma@email.com",
+                              ),
+                            ),
+                          ),
+
+                          Opacity(
+                            opacity: 0.7,
+                            child: AbsorbPointer(
+                              child: CompanyField(
+                                label: "Phone",
+                                value: "+91 98765 43210",
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
-                    Opacity(
-                      opacity: 0.7,
-                      child: AbsorbPointer(
-                        child: CompanyField(
-                          label: "Email",
-                          value: "rahul.sharma@email.com",
-                        ),
+                    const SizedBox(height: 14),
+
+                    // 🔹 SKILLS CARD
+                    _card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          SectionTitle(title: "Technical Skills"),
+                          CompanyField(
+                            label: "Skills",
+                            value: "Flutter, Dart, Python, Firebase",
+                          ),
+                        ],
                       ),
                     ),
 
-                    Opacity(
-                      opacity: 0.7,
-                      child: AbsorbPointer(
-                        child: CompanyField(
-                          label: "Phone",
-                          value: "+91 98765 43210",
-                        ),
+                    const SizedBox(height: 14),
+
+                    // 🔹 QUALIFICATION CARD
+                    _card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          SectionTitle(title: "Qualification"),
+                          CompanyField(
+                            label: "College Name",
+                            value: "MIT College of Engineering, Pune",
+                          ),
+                          CompanyField(label: "Course", value: "B.E."),
+                          CompanyField(label: "Branch", value: "Computer Engineering"),
+                          CompanyField(label: "Year", value: "3rd Year"),
+                          CompanyField(label: "CGPA", value: "8.5 / 10"),
+                          CompanyField(label: "12th / Diploma %", value: "85%"),
+                          CompanyField(label: "Year of Passing", value: "2025"),
+                        ],
                       ),
                     ),
 
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 14),
 
-                    const SectionTitle(title: "Technical Skills"),
+                    // 🔹 DOCUMENT CARD
+                    _card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                    const CompanyField(
-                      label: "Skills",
-                      value: "Flutter, Dart, Python, Firebase",
-                    ),
+                          const SectionTitle(title: "Documents"),
 
-                    const SizedBox(height: 10),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: OutlinedButton.icon(
+                              onPressed: () {},
+                              icon: const Icon(Icons.upload_file),
+                              label: const Text("Upload Resume"),
+                              style: OutlinedButton.styleFrom(
+                                minimumSize:
+                                const Size(double.infinity, 48),
+                              ),
+                            ),
+                          ),
 
-                    const SectionTitle(title: "Qualification"),
-
-                    const CompanyField(
-                      label: "College Name",
-                      value: "MIT College of Engineering, Pune",
-                    ),
-                    const CompanyField(label: "Course", value: "B.E."),
-                    const CompanyField(label: "Branch", value: "Computer Engineering"),
-                    const CompanyField(label: "Year", value: "3rd Year"),
-                    const CompanyField(label: "CGPA", value: "8.5 / 10"),
-                    const CompanyField(label: "12th / Diploma %", value: "85%"),
-                    const CompanyField(label: "Year of Passing", value: "2025"),
-
-                    const SizedBox(height: 10),
-
-                    const SectionTitle(title: "Documents"),
-
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.upload_file),
-                        label: const Text("Upload Resume"),
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 48),
-                        ),
-                      ),
-                    ),
-
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.attach_file),
-                        label: const Text("Upload Documents"),
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 48),
-                        ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: OutlinedButton.icon(
+                              onPressed: () {},
+                              icon: const Icon(Icons.attach_file),
+                              label: const Text("Upload Documents"),
+                              style: OutlinedButton.styleFrom(
+                                minimumSize:
+                                const Size(double.infinity, 48),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
                     const SizedBox(height: 20),
 
-                    // ✅ UPDATED BUTTON (MATCHES YOUR UI 🎯)
+                    // 🔹 SAVE BUTTON (UNCHANGED)
                     GestureDetector(
                       onTap: () {},
                       child: Container(
@@ -184,6 +219,19 @@ class _EditStudentProfilePageState
           ],
         ),
       ),
+    );
+  }
+
+  // ✅ SAME CARD STYLE (Copied from AddWorkLocationPage)
+  Widget _card({required Widget child}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: cardBg,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: child,
     );
   }
 }

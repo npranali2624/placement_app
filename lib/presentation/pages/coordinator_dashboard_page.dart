@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import '../widgets/info_tile.dart';
 import 'login_page.dart';
 import 'register_company_page.dart';
-import 'add_edit_opening.dart'; // ✅ ADDED IMPORT
+import 'add_edit_opening.dart';
+
+// ✅ ADD THESE IMPORTS
+import 'add_work_location_page.dart';
+import 'company_details_page.dart';
+import 'coordinator_profile_page.dart';
 
 class CoordinatorDashboardPage extends StatefulWidget {
   const CoordinatorDashboardPage({super.key});
@@ -33,6 +38,34 @@ class _CoordinatorDashboardPageState
     );
   }
 
+  // ✅ NEW NAVIGATION METHODS
+  void _openAddWorkLocation() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddWorkLocationPage(),
+      ),
+    );
+  }
+
+  void _openEditCompany() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CompanyDetailsScreen(),
+      ),
+    );
+  }
+
+  void _openProfile() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CoordinatorProfilePage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +76,8 @@ class _CoordinatorDashboardPageState
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              padding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               decoration: const BoxDecoration(
                 color: Color(0xFFD5EDE3),
               ),
@@ -52,7 +86,8 @@ class _CoordinatorDashboardPageState
                   CircleAvatar(
                     radius: 24,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 26, color: Color(0xFF2ECC71)),
+                    child: Icon(Icons.person,
+                        size: 26, color: Color(0xFF2ECC71)),
                   ),
                   SizedBox(width: 12),
                   Column(
@@ -97,8 +132,8 @@ class _CoordinatorDashboardPageState
               onTap: _logout,
               child: Container(
                 width: double.infinity,
-                padding:
-                const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 14, horizontal: 16),
                 child: const Row(
                   children: [
                     Icon(Icons.logout, color: Colors.red),
@@ -135,7 +170,8 @@ class _CoordinatorDashboardPageState
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications_none, color: Colors.black),
+            child:
+            Icon(Icons.notifications_none, color: Colors.black),
           )
         ],
       ),
@@ -162,15 +198,19 @@ class _CoordinatorDashboardPageState
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  border:
-                  Border.all(color: Colors.grey.shade300, width: 1.2),
+                  border: Border.all(
+                      color: Colors.grey.shade300, width: 1.2),
                 ),
                 child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceEvenly,
                   children: [
-                    StatItem("28", "Companies", Color(0xFFFF8A00)),
-                    StatItem("54", "Openings", Color(0xFF2ECC71)),
-                    StatItem("196", "Applicants", Color(0xFF1ABC9C)),
+                    StatItem("28", "Companies",
+                        Color(0xFFFF8A00)),
+                    StatItem("54", "Openings",
+                        Color(0xFF2ECC71)),
+                    StatItem("196", "Applicants",
+                        Color(0xFF1ABC9C)),
                   ],
                 ),
               ),
@@ -193,7 +233,8 @@ class _CoordinatorDashboardPageState
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RegisterCompanyPage(),
+                      builder: (context) =>
+                      const RegisterCompanyPage(),
                     ),
                   );
                 },
@@ -207,7 +248,7 @@ class _CoordinatorDashboardPageState
               ),
 
               InkWell(
-                onTap: () {},
+                onTap: _openAddWorkLocation, // ✅ UPDATED
                 borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.location_on,
@@ -218,7 +259,7 @@ class _CoordinatorDashboardPageState
               ),
 
               InkWell(
-                onTap: () {},
+                onTap: _openEditCompany, // ✅ UPDATED
                 borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.edit,
@@ -241,7 +282,6 @@ class _CoordinatorDashboardPageState
 
               const SizedBox(height: 10),
 
-              // ✅ UPDATED HERE
               InkWell(
                 onTap: _openAddEditOpening,
                 borderRadius: BorderRadius.circular(20),
@@ -285,20 +325,36 @@ class _CoordinatorDashboardPageState
           setState(() {
             _currentIndex = index;
           });
+
+          // ✅ PROFILE NAVIGATION ADDED
+          if (index == 4) {
+            _openProfile();
+          }
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF2ECC71),
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black54,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.business), label: "Companies"),
+            icon: Icon(Icons.home, color: Color(0xFF2ECC71)),
+            label: "Dashboard",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.work), label: "Openings"),
+            icon: Icon(Icons.business, color: Color(0xFF3498DB)),
+            label: "Companies",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.group), label: "Applicants"),
+            icon: Icon(Icons.work, color: Color(0xFFF39C12)),
+            label: "Openings",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person), label: "Profile"),
+            icon: Icon(Icons.group, color: Color(0xFF9B59B6)),
+            label: "Applicants",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Color(0xFF1ABC9C)),
+            label: "Profile",
+          ),
         ],
       ),
     );

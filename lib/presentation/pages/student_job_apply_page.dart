@@ -22,7 +22,6 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
   final TextEditingController skillsController = TextEditingController();
   final TextEditingController coverLetterController = TextEditingController();
 
-
   final TextEditingController courseController = TextEditingController();
   final TextEditingController cgpaController = TextEditingController();
   final TextEditingController specializationController = TextEditingController();
@@ -35,6 +34,8 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
 
   bool isAvailable = true;
   bool agreeTerms = false;
+
+  static const Color focusBlue = Color(0xFF4A90E2); // ✅ BLUE FOCUS COLOR
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
         child: Column(
           children: [
 
-
+            // 🔹 HEADER CARD
             Container(
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
@@ -69,8 +70,6 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
                     Color(0xFF667EEA),
                     Color(0xFF764BA2),
                   ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(18)),
               ),
@@ -106,8 +105,7 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
 
             const SizedBox(height: 16),
 
-
-            _sectionCard("Personal Details", Icons.person, const Color(0xFF667EEA), [
+            _sectionCard("Personal Details", Icons.person, focusBlue, [
               _textField("Full Name", nameController),
               _textField("Email", emailController),
               _textField("Phone Number", phoneController),
@@ -116,35 +114,29 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
               _textField("Specialization", specializationController),
             ]),
 
-
-            _sectionCard("Skills & Tools", Icons.code, const Color(0xFF00BFA6), [
+            _sectionCard("Skills & Tools", Icons.code, focusBlue, [
               _textField("Skills (e.g. Flutter, Java)", skillsController),
               _textField("Tools / Technologies", toolsController),
             ]),
 
-
-            _sectionCard("Profiles", Icons.link, const Color(0xFF42A5F5), [
+            _sectionCard("Profiles", Icons.link, focusBlue, [
               _textField("GitHub Link", githubController),
               _textField("LinkedIn Link", linkedinController),
             ]),
 
-
-            _sectionCard("Experience", Icons.work, const Color(0xFFAB47BC), [
+            _sectionCard("Experience", Icons.work, focusBlue, [
               _textField("Experience Details", experienceController),
             ]),
 
-
-            _sectionCard("Projects", Icons.build, const Color(0xFFFF7E5F), [
+            _sectionCard("Projects", Icons.build, focusBlue, [
               _textField("Project Details", projectsController, maxLines: 3),
             ]),
 
-
-            _sectionCard("Certificates / Achievements", Icons.emoji_events, const Color(0xFF26A69A), [
+            _sectionCard("Certificates / Achievements", Icons.emoji_events, focusBlue, [
               _textField("Certificates / Achievements", certificateController, maxLines: 3),
             ]),
 
-
-            _sectionCard("Resume", Icons.upload_file, const Color(0xFFFF8A65), [
+            _sectionCard("Resume", Icons.upload_file, focusBlue, [
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -161,13 +153,11 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
               )
             ]),
 
-
-            _sectionCard("Cover Letter", Icons.description, const Color(0xFF42A5F5), [
+            _sectionCard("Cover Letter", Icons.description, focusBlue, [
               _textField("Write something about yourself...", coverLetterController, maxLines: 4),
             ]),
 
-
-            _sectionCard("Availability", Icons.access_time, const Color(0xFFAB47BC), [
+            _sectionCard("Availability", Icons.access_time, focusBlue, [
               SwitchListTile(
                 value: isAvailable,
                 onChanged: (val) {
@@ -176,7 +166,6 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
                 title: const Text("Available to join immediately"),
               )
             ]),
-
 
             Row(
               children: [
@@ -193,7 +182,6 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
             ),
 
             const SizedBox(height: 20),
-
 
             GestureDetector(
               onTap: () {
@@ -233,7 +221,7 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
     );
   }
 
-
+  // ✅ UPDATED TEXTFIELD (FOCUS BORDER ADDED)
   Widget _textField(String hint, TextEditingController controller,
       {int maxLines = 1}) {
     return Padding(
@@ -245,15 +233,27 @@ class _StudentJobApplyPageState extends State<StudentJobApplyPage> {
           hintText: hint,
           filled: true,
           fillColor: Colors.grey.shade100,
-          border: OutlineInputBorder(
+
+          // NORMAL BORDER
+          enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
+            borderSide: BorderSide(
+              color: Colors.grey.shade300,
+            ),
+          ),
+
+          // ✅ BLUE BORDER WHEN FOCUSED
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              color: focusBlue,
+              width: 2,
+            ),
           ),
         ),
       ),
     );
   }
-
 
   Widget _sectionCard(
       String title, IconData icon, Color color, List<Widget> children) {

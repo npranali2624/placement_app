@@ -22,7 +22,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
     );
   }
 
-
   void _openJobDetails({
     required String title,
     required String company,
@@ -190,7 +189,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
 
               const SizedBox(height: 20),
 
-              // 🔥 JOB CARD 1
               GestureDetector(
                 onTap: () => _openJobDetails(
                   title: "Software Engineer",
@@ -211,7 +209,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                 ),
               ),
 
-              // 🔥 JOB CARD 2
               GestureDetector(
                 onTap: () => _openJobDetails(
                   title: "UI/UX Designer",
@@ -232,7 +229,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                 ),
               ),
 
-              // 🔥 JOB CARD 3
               GestureDetector(
                 onTap: () => _openJobDetails(
                   title: "Flutter Developer",
@@ -253,7 +249,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                 ),
               ),
 
-              // 🔥 JOB CARD 4
               GestureDetector(
                 onTap: () => _openJobDetails(
                   title: "Data Analyst",
@@ -278,6 +273,7 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
         ),
       ),
 
+      // ✅ ONLY CHANGE: STATIC MULTI-COLOR ICONS
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -293,14 +289,29 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
           }
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF2ECC71),
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black54,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
-          BottomNavigationBarItem(icon: Icon(Icons.business), label: "Companies"),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: "Applicants"),
-          BottomNavigationBarItem(icon: Icon(Icons.assignment_turned_in), label: "Apply"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Color(0xFF2ECC71)),
+            label: "Dashboard",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business, color: Color(0xFF3498DB)),
+            label: "Companies",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.group, color: Color(0xFFF1C40F)),
+            label: "Applicants",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment_turned_in, color: Color(0xFFE67E22)),
+            label: "Apply",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person, color: Color(0xFF1ABC9C)),
+            label: "Profile",
+          ),
         ],
       ),
     );
