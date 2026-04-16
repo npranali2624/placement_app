@@ -30,9 +30,8 @@ class StudentProfilePage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        // ✅ UNIFIED: AppRadius.card
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: AppColors.cardBorder),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey.shade300),
       ),
       clipBehavior: Clip.hardEdge,
       child: Column(
@@ -65,31 +64,28 @@ class StudentProfilePage extends StatelessWidget {
                     children: [
                       Text(
                         row['label']!,
-                        // ✅ UNIFIED: AppColors.textMuted
                         style: const TextStyle(
                           fontSize: 13,
-                          color: AppColors.textMuted,
+                          color: Colors.grey,
                         ),
                       ),
                       const Spacer(),
                       Text(
                         row['value']!,
-                        // ✅ UNIFIED: AppColors.textDark
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.textDark,
+                          color: Colors.black,
                         ),
                       ),
                     ],
                   ),
                 ),
                 if (!isLast)
-                // ✅ UNIFIED: AppColors.divider
-                  const Divider(
+                  Divider(
                     height: 1,
                     thickness: 0.5,
-                    color: AppColors.divider,
+                    color: Colors.grey.shade300,
                   ),
               ],
             );
@@ -102,22 +98,20 @@ class StudentProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ✅ UNIFIED: uses AppColors.background directly
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFD5EDE3),
 
       appBar: AppBar(
         title: const Text(
           "Student Profile",
           style: TextStyle(
-            color: AppColors.textDark,
+            color: Colors.black,
             fontWeight: FontWeight.w600,
           ),
         ),
-        // ✅ UNIFIED: AppColors.sageHeader
-        backgroundColor: AppColors.sageHeader,
+        backgroundColor: const Color(0xFFD5EDE3),
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.textDark),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
 
       body: SafeArea(
@@ -125,29 +119,27 @@ class StudentProfilePage extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           child: Column(
             children: [
-              // ✅ UNIFIED: card border and radius
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 28),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  border: Border.all(color: AppColors.cardBorder),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: Column(
                   children: [
-                    // ✅ UNIFIED: avatar radius matches AppRadius.card
                     Container(
                       width: 96,
                       height: 96,
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(AppRadius.card),
+                        color: const Color(0xFFFFD54F).withOpacity(0.25), // soft yellow bg
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: const Icon(
                         Icons.person,
                         size: 52,
-                        color: AppColors.primary,
+                        color: Color(0xFFFFA000), // amber icon (not too bright)
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -156,7 +148,7 @@ class StudentProfilePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textDark,
+                        color: Colors.black,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -164,7 +156,7 @@ class StudentProfilePage extends StatelessWidget {
                       _email,
                       style: TextStyle(
                         fontSize: 13,
-                        color: AppColors.primary,
+                        color: Color(0xFF2ECC71),
                       ),
                     ),
                   ],
@@ -173,11 +165,12 @@ class StudentProfilePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
+              // 🟠 PERSONAL DETAILS
               _sectionCard(
                 title: "PERSONAL DETAILS",
                 gradientColors: const [
-                  AppColors.primary,
-                  AppColors.sage,
+                  Color(0xFFFFA726),
+                  Color(0xFFFFCC80),
                 ],
                 rows: const [
                   {'label': 'Gender', 'value': _gender},
@@ -190,11 +183,12 @@ class StudentProfilePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
+              // 🟠 QUALIFICATION (same color)
               _sectionCard(
                 title: "QUALIFICATION",
                 gradientColors: const [
-                  AppColors.secondary,
-                  AppColors.primary,
+                  Color(0xFFFFA726),
+                  Color(0xFFFFCC80),
                 ],
                 rows: const [
                   {'label': 'College Name', 'value': _college},
@@ -209,7 +203,7 @@ class StudentProfilePage extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              // ✅ UNIFIED: same button style as login page
+              // 🔵 BUTTON
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -219,13 +213,18 @@ class StudentProfilePage extends StatelessWidget {
                     ),
                   );
                 },
-                borderRadius: BorderRadius.circular(AppRadius.button),
+                borderRadius: BorderRadius.circular(14),
                 child: Container(
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(AppRadius.button),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFF64B5F6),
+                        Color(0xFF90CAF9),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Center(
                     child: Text(

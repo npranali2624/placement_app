@@ -20,13 +20,13 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFD5EDE3),
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: const Color(0xFF2ECC71),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
@@ -38,18 +38,18 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
       ),
 
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: const Color(0xFFD5EDE3),
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.textDark),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: const Text(
           "Register Company",
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: AppColors.textDark,
+            color: Colors.black,
           ),
         ),
       ),
@@ -64,7 +64,7 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                 text: const TextSpan(
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.textMuted,
+                    color: Colors.grey,
                     fontWeight: FontWeight.bold,
                   ),
                   children: [
@@ -100,13 +100,13 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
 
               InkWell(
                 onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.button),
+                borderRadius: BorderRadius.circular(14),
                 child: Container(
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(AppRadius.button),
+                    color: const Color(0xFF2ECC71),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Center(
                     child: Text(

@@ -1,32 +1,7 @@
 import 'package:flutter/material.dart';
+import '../widgets/section_title.dart';
 import 'coordinator_dashboard_page.dart';
 import 'student_dashboard_page.dart';
-
-class AppColors {
-  static const Color primary    = Color(0xFF55A3A7);
-  static const Color secondary  = Color(0xFF4A83B0);
-  static const Color accent     = Color(0xFFE9C966);
-  static const Color amber      = Color(0xFFECB93C);
-  static const Color sage       = Color(0xFF91BA90);
-  static const Color background = Color(0xFFD5EDE3);
-  static const Color sageHeader = Color(0xFFAED3C6);
-
-  // ✅ UNIFIED: text & surface colors used across all pages
-  static const Color textDark      = Color(0xFF1A4A44);
-  static const Color textMuted     = Color(0xFF6B8F85);
-  static const Color fieldFill     = Color(0xFFEAF6F3);
-  static const Color fieldBorder   = Color(0xFFCCE8DE);
-  static const Color divider       = Color(0xFFE0EEEA);
-  static const Color cardBorder    = Color(0xFFCCE8DE);
-}
-
-// ✅ UNIFIED: border radii used everywhere
-class AppRadius {
-  static const double field  = 12.0;
-  static const double button = 14.0;
-  static const double card   = 16.0;
-  static const double logo   = 20.0;
-}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -37,14 +12,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController loginController    = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  bool obscurePassword = true;
+  final TextEditingController _loginController    = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscurePassword = true;
 
-  String? validateLogin(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return "Enter Email or Mobile Number";
-    }
+  String? _validateLogin(String? value) {
+    if (value == null || value.trim().isEmpty) return "Enter Email or Mobile Number";
     final emailRegex  = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     final mobileRegex = RegExp(r'^[0-9]{10}$');
     if (!emailRegex.hasMatch(value.trim()) && !mobileRegex.hasMatch(value.trim())) {
@@ -53,43 +26,10 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  String? validatePassword(String? value) {
+  String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) return "Enter Password";
     if (value.length < 6) return "Password must be at least 6 characters";
     return null;
-  }
-
-  // ✅ UNIFIED: shared input decoration matching all pages
-  InputDecoration _fieldDecoration({
-    required String hint,
-    required IconData prefixIcon,
-    Widget? suffix,
-  }) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-      prefixIcon: Icon(prefixIcon, color: AppColors.primary, size: 20),
-      suffixIcon: suffix,
-      filled: true,
-      fillColor: AppColors.fieldFill,
-      contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppRadius.field),
-        borderSide: const BorderSide(color: AppColors.fieldBorder, width: 1.5),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppRadius.field),
-        borderSide: const BorderSide(color: AppColors.primary, width: 2),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppRadius.field),
-        borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppRadius.field),
-        borderSide: const BorderSide(color: Colors.redAccent, width: 2),
-      ),
-    );
   }
 
   void _navigateTo(Widget page) {
@@ -101,25 +41,169 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Widget _loginField({
+    required String label,
+    required String hint,
+    required TextEditingController controller,
+    bool obscureText = false,
+    Widget? suffixIcon,
+    String? Function(String?)? validator,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 11,
+              color: Colors.grey,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 6),
+          TextFormField(
+            controller: controller,
+            obscureText: obscureText,
+            validator: validator,
+            keyboardType: keyboardType,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey,
+              ),
+              suffixIcon: suffixIcon,
+              filled: true,
+              fillColor: const Color(0xFFF5F7F6),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(
+                  color: Color(0xFF2ECC71),
+                  width: 1,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(color: Colors.redAccent, width: 1),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _gradientButton({
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 55,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF1ABC9C), Color(0xFF2ECC71)],
+          ),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 17,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _outlinedButton({
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 55,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF5F7F6),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: const Color(0xFF3dba8c), width: 1),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: const TextStyle(
+              color: Color(0xFF2a9d72),
+              fontWeight: FontWeight.w600,
+              fontSize: 17,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _roleBadge(String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      decoration: BoxDecoration(
+        color: const Color(0xFF3dba8c).withOpacity(0.12),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFF3dba8c).withOpacity(0.4)),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFF3dba8c),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.sageHeader,
+      backgroundColor: const Color(0xFFD5EDE3),
       body: SafeArea(
         child: Column(
           children: [
-            // ── Top section: sage bg with logo + title ──
+
+
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 36, 20, 28),
+              padding: const EdgeInsets.fromLTRB(20, 25, 20, 10),
               child: Column(
                 children: [
-                  // Logo box — ✅ uses AppRadius.logo
                   Container(
-                    width: 68,
-                    height: 68,
+                    width: 70,
+                    height: 70,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.45),
-                      borderRadius: BorderRadius.circular(AppRadius.logo),
+                      color: Colors.white.withOpacity(0.55),
+                      borderRadius: BorderRadius.circular(22),
                       border: Border.all(
                         color: Colors.white.withOpacity(0.7),
                         width: 1.5,
@@ -127,155 +211,126 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: const Icon(
                       Icons.work_outline_rounded,
-                      color: AppColors.primary,
-                      size: 34,
+                      color: Color(0xFF3dba8c),
+                      size: 36,
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 12),
                   const Text(
                     "Placement App",
                     style: TextStyle(
                       fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textDark,
-                      letterSpacing: 0.3,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2a9d72),
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
+                  const SizedBox(height: 5),
+                  const Text(
                     "Your career journey starts here",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.textDark.withOpacity(0.7),
-                    ),
+                    style: TextStyle(fontSize: 13, color: Colors.grey),
                   ),
-                  const SizedBox(height: 14),
-                  // Role badges
+                  const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _roleBadge("Coordinator", AppColors.primary),
-                      const SizedBox(width: 8),
-                      _roleBadge("Student", AppColors.secondary),
+                      _roleBadge("Coordinator"),
+                      const SizedBox(width: 10),
+                      _roleBadge("Student"),
                     ],
                   ),
                 ],
               ),
             ),
 
-            // ── Bottom white card — ✅ uses AppRadius.card ──
+            // EXTRA LARGE CARD
             Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(AppRadius.card + 8),
-                  ),
-                ),
+              child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _sectionLabel("Email or Mobile"),
-                        const SizedBox(height: 6),
-                        TextFormField(
-                          controller: loginController,
-                          validator: validateLogin,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: _fieldDecoration(
-                            hint: "Enter email or mobile number",
-                            prefixIcon: Icons.mail_outline_rounded,
-                          ),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 600,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Card(
+                        elevation: 8,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        const SizedBox(height: 16),
-                        _sectionLabel("Password"),
-                        const SizedBox(height: 6),
-                        TextFormField(
-                          controller: passwordController,
-                          validator: validatePassword,
-                          obscureText: obscurePassword,
-                          decoration: _fieldDecoration(
-                            hint: "Enter your password",
-                            prefixIcon: Icons.lock_outline_rounded,
-                            suffix: IconButton(
-                              icon: Icon(
-                                obscurePassword
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined,
-                                color: AppColors.primary,
-                                size: 20,
-                              ),
-                              onPressed: () =>
-                                  setState(() => obscurePassword = !obscurePassword),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
-                        // ✅ UNIFIED: divider color
-                        Row(
-                          children: [
-                            const Expanded(child: Divider(color: AppColors.divider)),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                "login as",
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey.shade400,
-                                  fontWeight: FontWeight.w500,
+                                const SectionTitle(title: "Login Details"),
+
+                                _loginField(
+                                  label: "Email or Mobile",
+                                  hint: "Enter email or 10-digit mobile",
+                                  controller: _loginController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: _validateLogin,
                                 ),
-                              ),
-                            ),
-                            const Expanded(child: Divider(color: AppColors.divider)),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
 
-                        // ✅ UNIFIED: uses _loginButton with InkWell
-                        _loginButton(
-                          label: "Login as Coordinator",
-                          color: AppColors.primary,
-                          onTap: () => _navigateTo(const CoordinatorDashboardPage()),
-                        ),
-                        const SizedBox(height: 10),
-                        _loginButton(
-                          label: "Login as Student",
-                          color: AppColors.secondary,
-                          onTap: () => _navigateTo(const StudentDashboardPage()),
-                        ),
-                        const SizedBox(height: 16),
+                                _loginField(
+                                  label: "Password",
+                                  hint: "Enter your password",
+                                  controller: _passwordController,
+                                  obscureText: _obscurePassword,
+                                  validator: _validatePassword,
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscurePassword
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      color: const Color(0xFF3dba8c),
+                                      size: 20,
+                                    ),
+                                    onPressed: () => setState(
+                                          () => _obscurePassword = !_obscurePassword,
+                                    ),
+                                  ),
+                                ),
 
-                        Center(
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                              ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: const Text(
+                                      "Forgot Password?",
+                                      style: TextStyle(
+                                        color: Color(0xFF2a9d72),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                const SizedBox(height: 10),
+                                const SectionTitle(title: "Login As"),
+                                const SizedBox(height: 6),
+
+                                _gradientButton(
+                                  label: "Login as Coordinator",
+                                  onTap: () => _navigateTo(const CoordinatorDashboardPage()),
+                                ),
+
+                                const SizedBox(height: 12),
+
+                                _outlinedButton(
+                                  label: "Login as Student",
+                                  onTap: () => _navigateTo(const StudentDashboardPage()),
+                                ),
+
+                              ],
                             ),
                           ),
                         ),
-                        const SizedBox(height: 8),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _dot(AppColors.primary),
-                            const SizedBox(width: 6),
-                            _dot(AppColors.sageHeader),
-                            const SizedBox(width: 6),
-                            _dot(AppColors.secondary.withOpacity(0.5)),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -284,76 +339,6 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-    );
-  }
-
-  // ✅ UNIFIED: section label style (matches edit profile)
-  Widget _sectionLabel(String text) {
-    return Text(
-      text.toUpperCase(),
-      style: const TextStyle(
-        fontSize: 11,
-        fontWeight: FontWeight.w700,
-        color: AppColors.primary,
-        letterSpacing: 0.8,
-      ),
-    );
-  }
-
-  Widget _roleBadge(String label, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.4)),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-          color: color.withOpacity(0.85),
-        ),
-      ),
-    );
-  }
-
-  // ✅ UNIFIED: uses InkWell for tap feedback, AppRadius.button
-  Widget _loginButton({
-    required String label,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(AppRadius.button),
-      child: Container(
-        width: double.infinity,
-        height: 50,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(AppRadius.button),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _dot(Color color) {
-    return Container(
-      width: 6,
-      height: 6,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
 }

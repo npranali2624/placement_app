@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/info_tile.dart';
 import 'login_page.dart';
 import 'register_company_page.dart';
+import 'add_edit_opening.dart'; // ✅ ADDED IMPORT
 
 class CoordinatorDashboardPage extends StatefulWidget {
   const CoordinatorDashboardPage({super.key});
@@ -23,28 +24,35 @@ class _CoordinatorDashboardPageState
     );
   }
 
+  void _openAddEditOpening() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddEditOpeningScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ✅ UNIFIED: uses AppColors.background
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFD5EDE3),
 
       drawer: Drawer(
         child: Column(
           children: [
-            // ✅ UNIFIED: uses AppColors.sageHeader
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               decoration: const BoxDecoration(
-                color: AppColors.sageHeader,
+                color: Color(0xFFD5EDE3),
               ),
               child: const Row(
                 children: [
                   CircleAvatar(
                     radius: 24,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 26, color: AppColors.primary),
+                    child: Icon(Icons.person, size: 26, color: Color(0xFF2ECC71)),
                   ),
                   SizedBox(width: 12),
                   Column(
@@ -55,14 +63,14 @@ class _CoordinatorDashboardPageState
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.textDark,
+                          color: Colors.black,
                         ),
                       ),
                       Text(
                         "coordinator@email.com",
                         style: TextStyle(
                           fontSize: 13,
-                          color: AppColors.textMuted,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
@@ -72,9 +80,9 @@ class _CoordinatorDashboardPageState
             ),
 
             ListTile(
-              leading: const Icon(Icons.settings, color: AppColors.textDark),
+              leading: const Icon(Icons.settings, color: Colors.black),
               title: const Text("Settings",
-                  style: TextStyle(color: AppColors.textDark)),
+                  style: TextStyle(color: Colors.black)),
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -85,12 +93,12 @@ class _CoordinatorDashboardPageState
 
             const Spacer(),
 
-            // ✅ UNIFIED: uses InkWell instead of GestureDetector
             InkWell(
               onTap: _logout,
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                padding:
+                const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                 child: const Row(
                   children: [
                     Icon(Icons.logout, color: Colors.red),
@@ -111,25 +119,23 @@ class _CoordinatorDashboardPageState
       ),
 
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: const Color(0xFFD5EDE3),
         elevation: 0,
-        scrolledUnderElevation: 0,
-        surfaceTintColor: Colors.transparent,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.textDark),
+            icon: const Icon(Icons.menu, color: Colors.black),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
         title: const Text(
           "Placement App",
-          style: TextStyle(color: AppColors.textDark),
+          style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications_none, color: AppColors.textDark),
+            child: Icon(Icons.notifications_none, color: Colors.black),
           )
         ],
       ),
@@ -140,25 +146,24 @@ class _CoordinatorDashboardPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ✅ UNIFIED: uses AppColors.textDark
               const Text(
                 "Welcome, Coordinator!",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
+                  color: Colors.black,
                 ),
               ),
 
               const SizedBox(height: 16),
 
-              // ✅ UNIFIED: uses AppRadius.card
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  border: Border.all(color: AppColors.cardBorder, width: 1.2),
+                  borderRadius: BorderRadius.circular(20),
+                  border:
+                  Border.all(color: Colors.grey.shade300, width: 1.2),
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,13 +177,12 @@ class _CoordinatorDashboardPageState
 
               const SizedBox(height: 20),
 
-              // ✅ UNIFIED: section header style
               const Text(
                 "Company Operations:",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
+                  color: Colors.black,
                 ),
               ),
 
@@ -193,7 +197,7 @@ class _CoordinatorDashboardPageState
                     ),
                   );
                 },
-                borderRadius: BorderRadius.circular(AppRadius.card),
+                borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.business,
                   title: "Register Company",
@@ -202,10 +206,9 @@ class _CoordinatorDashboardPageState
                 ),
               ),
 
-              // ✅ UNIFIED: all tiles wrapped in InkWell for tap feedback
               InkWell(
                 onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.card),
+                borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.location_on,
                   title: "Add Work Location",
@@ -216,7 +219,7 @@ class _CoordinatorDashboardPageState
 
               InkWell(
                 onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.card),
+                borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.edit,
                   title: "Edit Company Details",
@@ -232,15 +235,16 @@ class _CoordinatorDashboardPageState
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
+                  color: Colors.black,
                 ),
               ),
 
               const SizedBox(height: 10),
 
+              // ✅ UPDATED HERE
               InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.card),
+                onTap: _openAddEditOpening,
+                borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.work,
                   title: "Create Opening",
@@ -251,7 +255,7 @@ class _CoordinatorDashboardPageState
 
               InkWell(
                 onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.card),
+                borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.visibility,
                   title: "Read Opening",
@@ -262,7 +266,7 @@ class _CoordinatorDashboardPageState
 
               InkWell(
                 onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.card),
+                borderRadius: BorderRadius.circular(20),
                 child: const InfoTile(
                   icon: Icons.update,
                   title: "Update Opening",
@@ -275,7 +279,6 @@ class _CoordinatorDashboardPageState
         ),
       ),
 
-      // ✅ UNIFIED: selectedItemColor uses AppColors.primary
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -284,14 +287,18 @@ class _CoordinatorDashboardPageState
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: const Color(0xFF2ECC71),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
-          BottomNavigationBarItem(icon: Icon(Icons.business), label: "Companies"),
-          BottomNavigationBarItem(icon: Icon(Icons.work), label: "Openings"),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: "Applicants"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.business), label: "Companies"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.work), label: "Openings"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.group), label: "Applicants"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );
@@ -318,7 +325,7 @@ class StatItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(label, style: const TextStyle(color: AppColors.textMuted)),
+        Text(label, style: const TextStyle(color: Colors.grey)),
       ],
     );
   }

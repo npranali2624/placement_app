@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/job_card.dart';
 import 'login_page.dart';
 import 'student_profile_page.dart';
+import 'student_opening_details_page.dart';
 
 class StudentDashboardPage extends StatefulWidget {
   const StudentDashboardPage({super.key});
@@ -21,28 +22,48 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
     );
   }
 
+
+  void _openJobDetails({
+    required String title,
+    required String company,
+    required String location,
+    required String type,
+    required String salary,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StudentOpeningDetailsPage(
+          title: title,
+          company: company,
+          location: location,
+          type: type,
+          salary: salary,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ✅ UNIFIED: AppColors.background
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFD5EDE3),
 
       drawer: Drawer(
         child: Column(
           children: [
-            // ✅ UNIFIED: AppColors.sageHeader
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               decoration: const BoxDecoration(
-                color: AppColors.sageHeader,
+                color: Color(0xFFD5EDE3),
               ),
               child: const Row(
                 children: [
                   CircleAvatar(
                     radius: 24,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 26, color: AppColors.primary),
+                    child: Icon(Icons.person, size: 26, color: Color(0xFF2ECC71)),
                   ),
                   SizedBox(width: 12),
                   Column(
@@ -53,14 +74,14 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.textDark,
+                          color: Colors.black,
                         ),
                       ),
                       Text(
                         "student@email.com",
                         style: TextStyle(
                           fontSize: 13,
-                          color: AppColors.textMuted,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
@@ -70,9 +91,9 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
             ),
 
             ListTile(
-              leading: const Icon(Icons.settings, color: AppColors.textDark),
+              leading: const Icon(Icons.settings, color: Colors.black),
               title: const Text("Settings",
-                  style: TextStyle(color: AppColors.textDark)),
+                  style: TextStyle(color: Colors.black)),
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -83,7 +104,6 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
 
             const Spacer(),
 
-            // ✅ UNIFIED: InkWell for logout
             InkWell(
               onTap: _logout,
               child: Container(
@@ -109,13 +129,11 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
       ),
 
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: const Color(0xFFD5EDE3),
         elevation: 0,
-        scrolledUnderElevation: 0,
-        surfaceTintColor: Colors.transparent,
         leading: Builder(
           builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.textDark),
+            icon: const Icon(Icons.menu, color: Colors.black),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
@@ -123,7 +141,7 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
           height: 40,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(AppRadius.card),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: TextField(
             decoration: InputDecoration(
@@ -139,7 +157,7 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.notifications_none, color: AppColors.textDark),
+            child: Icon(Icons.notifications_none, color: Colors.black),
           ),
         ],
       ),
@@ -150,72 +168,116 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ✅ UNIFIED: AppColors.textDark for titles
+
               const Text(
                 "Welcome, Student!",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
+                  color: Colors.black,
                 ),
               ),
+
               const SizedBox(height: 6),
-              // ✅ UNIFIED: AppColors.textMuted for subtitles
+
               const Text(
                 "Exploring suitable job openings",
                 style: TextStyle(
-                  color: AppColors.textMuted,
+                  color: Colors.grey,
                   fontSize: 13,
                 ),
               ),
+
               const SizedBox(height: 20),
 
-              JobCard(
-                title: "Software Engineer",
-                company: "TechCorp",
-                type: "Full Time",
-                location: "San Francisco, USA",
-                time: "5 hours ago",
-                salary: "₹4-6 LPA",
-                iconColor: AppColors.primary,
-                logoLetter: "T",
+              // 🔥 JOB CARD 1
+              GestureDetector(
+                onTap: () => _openJobDetails(
+                  title: "Software Engineer",
+                  company: "TechCorp",
+                  location: "San Francisco, USA",
+                  type: "Full Time",
+                  salary: "₹4-6 LPA",
+                ),
+                child: JobCard(
+                  title: "Software Engineer",
+                  company: "TechCorp",
+                  type: "Full Time",
+                  location: "San Francisco, USA",
+                  time: "5 hours ago",
+                  salary: "₹4-6 LPA",
+                  iconColor: const Color(0xFF2ECC71),
+                  logoLetter: "T",
+                ),
               ),
-              JobCard(
-                title: "UI/UX Designer",
-                company: "XYZ Solutions",
-                type: "Remote",
-                location: "Remote",
-                time: "2 days ago",
-                salary: "₹3-5 LPA",
-                iconColor: AppColors.amber,
-                logoLetter: "X",
+
+              // 🔥 JOB CARD 2
+              GestureDetector(
+                onTap: () => _openJobDetails(
+                  title: "UI/UX Designer",
+                  company: "XYZ Solutions",
+                  location: "Remote",
+                  type: "Remote",
+                  salary: "₹3-5 LPA",
+                ),
+                child: JobCard(
+                  title: "UI/UX Designer",
+                  company: "XYZ Solutions",
+                  type: "Remote",
+                  location: "Remote",
+                  time: "2 days ago",
+                  salary: "₹3-5 LPA",
+                  iconColor: const Color(0xFFFFC107),
+                  logoLetter: "X",
+                ),
               ),
-              JobCard(
-                title: "Flutter Developer",
-                company: "DEE Technologies",
-                type: "Full Time",
-                location: "Bengaluru, India",
-                time: "3 hours ago",
-                salary: "₹5-8 LPA",
-                iconColor: AppColors.sage,
-                logoLetter: "D",
+
+              // 🔥 JOB CARD 3
+              GestureDetector(
+                onTap: () => _openJobDetails(
+                  title: "Flutter Developer",
+                  company: "DEE Technologies",
+                  location: "Bengaluru, India",
+                  type: "Full Time",
+                  salary: "₹5-8 LPA",
+                ),
+                child: JobCard(
+                  title: "Flutter Developer",
+                  company: "DEE Technologies",
+                  type: "Full Time",
+                  location: "Bengaluru, India",
+                  time: "3 hours ago",
+                  salary: "₹5-8 LPA",
+                  iconColor: const Color(0xFF3dba8c),
+                  logoLetter: "D",
+                ),
               ),
-              JobCard(
-                title: "Data Analyst",
-                company: "Analytics Hub",
-                type: "Full Time",
-                location: "Mumbai, India",
-                time: "1 day ago",
-                salary: "₹3-5 LPA",
-                iconColor: AppColors.secondary,
-                logoLetter: "A",
+
+              // 🔥 JOB CARD 4
+              GestureDetector(
+                onTap: () => _openJobDetails(
+                  title: "Data Analyst",
+                  company: "Analytics Hub",
+                  location: "Mumbai, India",
+                  type: "Full Time",
+                  salary: "₹3-5 LPA",
+                ),
+                child: JobCard(
+                  title: "Data Analyst",
+                  company: "Analytics Hub",
+                  type: "Full Time",
+                  location: "Mumbai, India",
+                  time: "1 day ago",
+                  salary: "₹3-5 LPA",
+                  iconColor: const Color(0xFF1ABC9C),
+                  logoLetter: "A",
+                ),
               ),
             ],
           ),
         ),
       ),
 
-      // ✅ UNIFIED: AppColors.primary for selectedItemColor
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -231,7 +293,7 @@ class _StudentDashboardPageState extends State<StudentDashboardPage> {
           }
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: const Color(0xFF2ECC71),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),

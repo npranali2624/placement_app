@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/company_field.dart';
 import '../widgets/section_title.dart';
-import '../widgets/primary_button.dart';
 
 class EditStudentProfilePage extends StatefulWidget {
   const EditStudentProfilePage({super.key});
@@ -63,9 +62,7 @@ class _EditStudentProfilePageState
                   CrossAxisAlignment.start,
                   children: [
 
-                    // 🔹 PERSONAL INFO (NON-EDITABLE)
-                    const SectionTitle(
-                        title: "Personal Information"),
+                    const SectionTitle(title: "Personal Information"),
 
                     Opacity(
                       opacity: 0.7,
@@ -99,55 +96,30 @@ class _EditStudentProfilePageState
 
                     const SizedBox(height: 10),
 
-                    // 🔹 SKILLS
-                    const SectionTitle(
-                        title: "Technical Skills"),
+                    const SectionTitle(title: "Technical Skills"),
 
                     const CompanyField(
                       label: "Skills",
-                      value:
-                      "Flutter, Dart, Python, Firebase",
+                      value: "Flutter, Dart, Python, Firebase",
                     ),
 
                     const SizedBox(height: 10),
 
-                    // 🔹 QUALIFICATION
-                    const SectionTitle(
-                        title: "Qualification"),
+                    const SectionTitle(title: "Qualification"),
 
                     const CompanyField(
                       label: "College Name",
-                      value:
-                      "MIT College of Engineering, Pune",
+                      value: "MIT College of Engineering, Pune",
                     ),
-                    const CompanyField(
-                      label: "Course",
-                      value: "B.E.",
-                    ),
-                    const CompanyField(
-                      label: "Branch",
-                      value: "Computer Engineering",
-                    ),
-                    const CompanyField(
-                      label: "Year",
-                      value: "3rd Year",
-                    ),
-                    const CompanyField(
-                      label: "CGPA",
-                      value: "8.5 / 10",
-                    ),
-                    const CompanyField(
-                      label: "12th / Diploma %",
-                      value: "85%",
-                    ),
-                    const CompanyField(
-                      label: "Year of Passing",
-                      value: "2025",
-                    ),
+                    const CompanyField(label: "Course", value: "B.E."),
+                    const CompanyField(label: "Branch", value: "Computer Engineering"),
+                    const CompanyField(label: "Year", value: "3rd Year"),
+                    const CompanyField(label: "CGPA", value: "8.5 / 10"),
+                    const CompanyField(label: "12th / Diploma %", value: "85%"),
+                    const CompanyField(label: "Year of Passing", value: "2025"),
 
                     const SizedBox(height: 10),
 
-                    // 🔹 DOCUMENTS
                     const SectionTitle(title: "Documents"),
 
                     Container(
@@ -155,11 +127,9 @@ class _EditStudentProfilePageState
                       child: OutlinedButton.icon(
                         onPressed: () {},
                         icon: const Icon(Icons.upload_file),
-                        label:
-                        const Text("Upload Resume"),
+                        label: const Text("Upload Resume"),
                         style: OutlinedButton.styleFrom(
-                          minimumSize:
-                          const Size(double.infinity, 48),
+                          minimumSize: const Size(double.infinity, 48),
                         ),
                       ),
                     ),
@@ -169,20 +139,42 @@ class _EditStudentProfilePageState
                       child: OutlinedButton.icon(
                         onPressed: () {},
                         icon: const Icon(Icons.attach_file),
-                        label:
-                        const Text("Upload Documents"),
+                        label: const Text("Upload Documents"),
                         style: OutlinedButton.styleFrom(
-                          minimumSize:
-                          const Size(double.infinity, 48),
+                          minimumSize: const Size(double.infinity, 48),
                         ),
                       ),
                     ),
 
                     const SizedBox(height: 20),
 
-                    // 🔹 SAVE BUTTON
-                    const PrimaryButton(
-                        text: "Save Changes"),
+                    // ✅ UPDATED BUTTON (MATCHES YOUR UI 🎯)
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF4CB8C4),
+                              Color(0xFF3CD3AD),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Save Changes",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
 
                     const SizedBox(height: 20),
                   ],
